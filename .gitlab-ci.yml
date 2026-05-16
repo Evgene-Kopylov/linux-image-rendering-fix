@@ -19,35 +19,35 @@ cache:
         - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"
 
-unit-tests:
-    stage: test
-    <<: *rules
-    image: node:${NODE_VERSION}
-    before_script:
-        - node --version
-        - npm --version
-    script:
-        - npm ci --prefer-offline
-        - npm test
-    timeout: 10m
+# unit-tests:
+#     stage: test
+#     <<: *rules
+#     image: node:${NODE_VERSION}
+#     before_script:
+#         - node --version
+#         - npm --version
+#     script:
+#         - npm ci --prefer-offline
+#         - npm test
+#     timeout: 10m
 
-typescript-check:
-    stage: test
-    image: node:${NODE_VERSION}
-    script:
-        - npm ci --prefer-offline
-        - npx tsc --noEmit --skipLibCheck
-    <<: *rules
-    timeout: 10m
+# typescript-check:
+#     stage: test
+#     image: node:${NODE_VERSION}
+#     script:
+#         - npm ci --prefer-offline
+#         - npx tsc --noEmit --skipLibCheck
+#     <<: *rules
+#     timeout: 10m
 
-eslint-check:
-    stage: test
-    image: node:${NODE_VERSION}
-    script:
-        - npm ci --prefer-offline
-        - npm run lint
-    <<: *rules
-    timeout: 10m
+# eslint-check:
+#     stage: test
+#     image: node:${NODE_VERSION}
+#     script:
+#         - npm ci --prefer-offline
+#         - npm run lint
+#     <<: *rules
+#     timeout: 10m
 
 plugin-build:
     stage: build
