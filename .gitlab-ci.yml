@@ -1,6 +1,5 @@
 stages:
     - test
-    - lint
     - build
     - release
 
@@ -33,7 +32,7 @@ unit-tests:
     timeout: 10m
 
 typescript-check:
-    stage: lint
+    stage: test
     image: node:${NODE_VERSION}
     script:
         - npm ci --prefer-offline
@@ -42,7 +41,7 @@ typescript-check:
     timeout: 10m
 
 eslint-check:
-    stage: lint
+    stage: test
     image: node:${NODE_VERSION}
     script:
         - npm ci --prefer-offline
