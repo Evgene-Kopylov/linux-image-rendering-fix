@@ -1,4 +1,4 @@
-import { Notice, Plugin } from "obsidian";
+import { MarkdownView, Plugin } from "obsidian";
 import { DEFAULT_SETTINGS, ImageRendererSettingTab } from "./settings";
 import type { ImageRendererSettings } from "./types";
 import { createImageProcessor } from "./utils/image-processor";
@@ -19,23 +19,30 @@ export default class ImageRendererPlugin extends Plugin {
             createImageProcessor(this.app.vault),
         );
 
-        // Пинг для отслеживания в логах
-        this.registerInterval(
-            activeWindow.setInterval(() => {
-                const file = this.app.workspace.getActiveFile();
-                const path = file?.path ?? "нет открытой страницы";
-                console.warn(`[ImageRenderer] Активная страница: ${path}`);
-            }, 5000),
-        );
+        // Принудительно обрабатываем текущую открытую страницу
+        this.processCurrentView();
 
-        // Команда для проверки работоспособности плагина
+        // Команда для повторной обработки изображений
         this.addCommand({
-            id: "check-status",
-            name: "Check status",
+            id: "reprocess-images",
+            name: "Reprocess images",
             callback: () => {
-                new Notice("Image renderer plugin is active");
+                this.processCurrentView();
             },
         });
+    }
+
+    /** Принудительно запускает обработчик на всех открытых MarkdownView */
+    private processCurrentView(): void {
+        const leaves = this.app.workspace.getLeavesOfType("markdown");
+        const processor = createImageProcessor(this.app.vault);
+
+        for (const leaf of leaves) {
+            const view = leaf.view;
+            if (view instanceof MarkdownView) {
+                processor(view.contentEl);
+            }
+        }
     }
 
     async loadSettings(): Promise<void> {

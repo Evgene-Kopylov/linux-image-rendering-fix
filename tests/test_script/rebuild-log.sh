@@ -115,5 +115,6 @@ echo "--- КОНЕЦ ЛОГА ---"
 
 echo ""
 log_message "📋 Готово."
-date '+%Y-%m-%d %H:%M:%S' > .last_rebuild_timestamp
+mkdir -p tmp
+date '+%Y-%m-%d %H:%M:%S' > tmp/.last_rebuild_timestamp
 exit 0

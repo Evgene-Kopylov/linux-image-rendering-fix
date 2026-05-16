@@ -1,4 +1,4 @@
-import type { Vault } from "obsidian";
+import type { FileSystemAdapter, Vault } from "obsidian";
 
 /** MIME-типы по расширениям файлов */
 const MIME_TYPES: Record<string, string> = {
@@ -62,24 +62,28 @@ async function processImage(
     // Пропускаем уже обработанные (blob URL) и внешние URL
     if (src.startsWith("blob:") || src.startsWith("http")) return;
 
-    const vaultPath = extractVaultPath(src);
+    let vaultPath = extractVaultPath(src);
     if (!vaultPath) {
         return;
     }
 
-    try {
-        console.warn(`[ImageRenderer] Обработка: ${vaultPath}`);
+    // Если путь абсолютный — обрезаем корень хранилища
+    const adapter = vault.adapter as FileSystemAdapter;
+    const basePath = adapter.getBasePath();
+    // Нормализуем: убираем ведущий / у обоих
+    const normBase = basePath.replace(/^\/+/, "");
+    const normPath = vaultPath.replace(/^\/+/, "");
+    if (normPath.startsWith(normBase)) {
+        vaultPath = normPath.slice(normBase.length).replace(/^\/+/, "");
+    }
 
+    try {
         const fileStat = await vault.adapter.stat(vaultPath);
         if (!fileStat) {
-            console.warn(`[ImageRenderer] Файл не найден: ${vaultPath}`);
             return;
         }
 
         if (fileStat.size > MAX_FILE_SIZE) {
-            console.warn(
-                `[ImageRenderer] Файл слишком большой (${fileStat.size} байт): ${vaultPath}`,
-            );
             return;
         }
 
@@ -89,10 +93,6 @@ async function processImage(
 
         img.setAttribute("src", blobUrl);
         img.setAttribute("data-image-renderer", "processed");
-
-        console.warn(
-            `[ImageRenderer] Успешно: ${vaultPath} (${buffer.byteLength} байт, ${mimeType})`,
-        );
     } catch (error) {
         console.error(`[ImageRenderer] Ошибка обработки ${vaultPath}:`, error);
     }
