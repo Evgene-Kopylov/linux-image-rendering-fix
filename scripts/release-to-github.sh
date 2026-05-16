@@ -19,7 +19,7 @@ fi
 TAG_NAME="$VERSION"
 DISPLAY_VERSION="${VERSION#v}"
 
-RELEASE_FILES="main.js manifest.json styles.css"
+RELEASE_FILES="main.js manifest.json"
 
 echo "📦 Подготовка релиза для тега: ${TAG_NAME} (версия ${DISPLAY_VERSION})"
 echo "📎 Файлы для загрузки: ${RELEASE_FILES}"

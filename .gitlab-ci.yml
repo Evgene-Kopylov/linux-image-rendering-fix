@@ -65,7 +65,6 @@ plugin-build:
     artifacts:
         paths:
             - main.js
-            - styles.css
             - manifest.json
         expire_in: 1 hour
     timeout: 10m
