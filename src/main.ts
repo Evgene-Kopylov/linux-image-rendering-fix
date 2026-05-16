@@ -1,5 +1,8 @@
-import { MarkdownView, Plugin } from "obsidian";
-import { createImageProcessor } from "./utils/image-processor";
+import { FileView, MarkdownView, Plugin, TFile } from "obsidian";
+import {
+    createImageProcessor,
+    IMAGE_EXTENSIONS,
+} from "./utils/image-processor";
 
 /**
  * Плагин Linux Image Rendering Fixer для Obsidian
@@ -21,8 +24,22 @@ export default class ImageRendererPlugin extends Plugin {
         this.registerEvent(
             this.app.workspace.on("active-leaf-change", (leaf) => {
                 const view = leaf?.view;
+                if (!view) return;
+
                 if (view instanceof MarkdownView) {
                     createImageProcessor(this.app.vault)(view.contentEl);
+                    return;
+                }
+
+                // Файл картинки открыт напрямую
+                if (view instanceof FileView) {
+                    const file = view.file;
+                    if (
+                        file instanceof TFile &&
+                        IMAGE_EXTENSIONS.has(file.extension)
+                    ) {
+                        createImageProcessor(this.app.vault)(view.containerEl);
+                    }
                 }
             }),
         );
@@ -37,16 +54,28 @@ export default class ImageRendererPlugin extends Plugin {
         });
     }
 
-    /** Принудительно запускает обработчик на всех открытых MarkdownView */
+    /** Принудительно запускает обработчик на всех открытых вьюхах */
     private processCurrentView(): void {
-        const leaves = this.app.workspace.getLeavesOfType("markdown");
         const processor = createImageProcessor(this.app.vault);
 
-        for (const leaf of leaves) {
+        this.app.workspace.iterateAllLeaves((leaf) => {
             const view = leaf.view;
+            if (!view) return;
+
             if (view instanceof MarkdownView) {
                 processor(view.contentEl);
+                return;
             }
-        }
+
+            if (view instanceof FileView) {
+                const file = view.file;
+                if (
+                    file instanceof TFile &&
+                    IMAGE_EXTENSIONS.has(file.extension)
+                ) {
+                    processor(view.containerEl);
+                }
+            }
+        });
     }
 }

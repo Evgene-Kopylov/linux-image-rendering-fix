@@ -12,6 +12,9 @@ const MIME_TYPES: Record<string, string> = {
     ico: "image/x-icon",
 };
 
+/** Расширения файлов изображений */
+export const IMAGE_EXTENSIONS = new Set(Object.keys(MIME_TYPES));
+
 /** Максимальный размер изображения для обработки (50 МБ) */
 const MAX_FILE_SIZE = 50 * 1024 * 1024;
 
