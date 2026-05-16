@@ -1,4 +1,4 @@
-# Agents.md — правила для Image Renderer Plugin
+# Agents.md — правила для Linux Image Rendering Fixer Plugin
 
 ## Язык и локализация
 

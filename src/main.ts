@@ -4,7 +4,7 @@ import type { ImageRendererSettings } from "./types";
 import { createImageProcessor } from "./utils/image-processor";
 
 /**
- * Плагин Image Renderer для Obsidian
+ * Плагин Linux Image Rendering Fixer для Obsidian
  * Исправляет проблемы отображения изображений на Linux
  */
 export default class ImageRendererPlugin extends Plugin {
