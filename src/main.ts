@@ -6,7 +6,7 @@ import { createImageProcessor } from "./utils/image-processor";
  * Исправляет проблемы отображения изображений на Linux
  */
 export default class ImageRendererPlugin extends Plugin {
-    async onload(): Promise<void> {
+    onload(): void {
         // Регистрируем обработчик изображений
         this.registerMarkdownPostProcessor(
             createImageProcessor(this.app.vault),
