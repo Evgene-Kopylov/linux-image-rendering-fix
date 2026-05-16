@@ -19,6 +19,15 @@ export default class ImageRendererPlugin extends Plugin {
             createImageProcessor(this.app.vault),
         );
 
+        // Пинг для отслеживания в логах
+        this.registerInterval(
+            activeWindow.setInterval(() => {
+                const file = this.app.workspace.getActiveFile();
+                const path = file?.path ?? "нет открытой страницы";
+                console.warn(`[ImageRenderer] Активная страница: ${path}`);
+            }, 5000),
+        );
+
         // Команда для проверки работоспособности плагина
         this.addCommand({
             id: "check-status",
