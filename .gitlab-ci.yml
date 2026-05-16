@@ -6,6 +6,8 @@ stages:
 variables:
     NODE_VERSION: "24-alpine"
     NPM_CONFIG_CACHE: "${CI_PROJECT_DIR}/.npm"
+    GITHUB_OWNER: "Evgene-Kopylov"
+    GITHUB_REPO: "linux-image-rendering-fixer-plugin"
 
 cache:
     key: "${CI_COMMIT_REF_SLUG}"
@@ -74,8 +76,6 @@ release_to_github:
     rules:
         - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"
     variables:
-        GITHUB_OWNER: "Evgene-Kopylov"
-        GITHUB_REPO: "linux-image-rendering-fixer-plugin-for-obsidian"
         GIT_DEPTH: 0
     needs:
         - plugin-build
@@ -101,8 +101,8 @@ push_to_github:
     variables:
         GIT_STRATEGY: clone
         GIT_DEPTH: 0
-        REPO_OWNER: "Evgene-Kopylov"
-        REPO_NAME: "linux-image-rendering-fixer-plugin-for-obsidian"
+        REPO_OWNER: "${GITHUB_OWNER}"
+        REPO_NAME: "${GITHUB_REPO}"
     before_script:
         - apk update
         - apk add --no-cache git curl jq zip
