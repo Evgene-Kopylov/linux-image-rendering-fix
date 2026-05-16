@@ -1,0 +1,113 @@
+stages:
+    - test
+    - lint
+    - build
+    - release
+
+variables:
+    NODE_VERSION: "24-alpine"
+    NPM_CONFIG_CACHE: "${CI_PROJECT_DIR}/.npm"
+
+cache:
+    key: "${CI_COMMIT_REF_SLUG}"
+    paths:
+        - node_modules/
+        - .npm/
+    policy: pull-push
+
+.rules: &rules
+    rules:
+        - if: $CI_MERGE_REQUEST_TARGET_BRANCH_NAME == $CI_DEFAULT_BRANCH
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"
+
+unit-tests:
+    stage: test
+    <<: *rules
+    image: node:${NODE_VERSION}
+    before_script:
+        - node --version
+        - npm --version
+    script:
+        - npm ci --prefer-offline
+        - npm test
+    timeout: 10m
+
+typescript-check:
+    stage: lint
+    image: node:${NODE_VERSION}
+    script:
+        - npm ci --prefer-offline
+        - npx tsc --noEmit --skipLibCheck
+    <<: *rules
+    timeout: 10m
+
+eslint-check:
+    stage: lint
+    image: node:${NODE_VERSION}
+    script:
+        - npm ci --prefer-offline
+        - npm run lint
+    <<: *rules
+    timeout: 10m
+
+plugin-build:
+    stage: build
+    image: node:${NODE_VERSION}
+    <<: *rules
+    needs:
+        - unit-tests
+        - typescript-check
+        - eslint-check
+    script:
+        - npm ci --prefer-offline
+        - npm run build
+    artifacts:
+        paths:
+            - main.js
+            - styles.css
+            - manifest.json
+        expire_in: 1 hour
+    timeout: 10m
+
+release_to_github:
+    stage: release
+    image: alpine:latest
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH && $CI_PIPELINE_SOURCE == "push"
+    variables:
+        GITHUB_OWNER: "Evgene-Kopylov"
+        GITHUB_REPO: "linux-image-rendering-fixer-plugin-for-obsidian"
+        GIT_DEPTH: 0
+    needs:
+        - plugin-build
+    before_script:
+        - apk update
+        - apk add --no-cache git curl jq file bash
+    script: |
+        git fetch --tags
+        LATEST_TAG=$(git tag --sort=-v:refname | head -n1)
+        echo "Последний тег: $LATEST_TAG"
+        export VERSION="$LATEST_TAG"
+        chmod +x scripts/release-to-github.sh
+        ./scripts/release-to-github.sh
+    timeout: 10m
+
+push_to_github:
+    stage: release
+    image: alpine:latest
+    rules:
+        - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    needs:
+        - release_to_github
+    variables:
+        GIT_STRATEGY: clone
+        GIT_DEPTH: 0
+        REPO_OWNER: "Evgene-Kopylov"
+        REPO_NAME: "linux-image-rendering-fixer-plugin-for-obsidian"
+    before_script:
+        - apk update
+        - apk add --no-cache git curl jq zip
+    script:
+        - git remote add github "https://oauth2:${GITHUB_TOKEN}@github.com/${REPO_OWNER}/${REPO_NAME}"
+        - git push github HEAD:refs/heads/main --force
+    timeout: 10m
