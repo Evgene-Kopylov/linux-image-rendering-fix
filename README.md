@@ -1,54 +1,54 @@
 # Image Renderer
 
-Плагин для Obsidian, исправляющий проблемы отображения изображений на Linux (Ubuntu).
+Obsidian plugin that fixes image rendering issues on Linux (Ubuntu).
 
-## Проблема
+## Problem
 
-На Ubuntu в сборке Electron/Chromium отсутствуют кодеки изображений.
-Obsidian загружает картинки через протокол `app://`, который возвращает статус 0 —
-изображения не отображаются, особенно в директориях с emoji в названии.
+On Ubuntu, the Electron/Chromium build lacks image codecs.
+Obsidian loads images via the `app://` protocol, which returns status 0 —
+images don't display, especially in directories with emoji in their names.
 
-## Как работает
+## How it works
 
-Плагин перехватывает рендеринг markdown (MarkdownPostProcessor), находит все `<img>`,
-читает файл изображения напрямую с диска через `vault.adapter.readBinary()`
-и подменяет `src` на Blob URL (`blob:...`). Это обходит проблемный `app://` протокол.
+The plugin intercepts markdown rendering (MarkdownPostProcessor), finds all `<img>`
+elements, reads the image file directly from disk via `vault.adapter.readBinary()`
+and replaces `src` with a Blob URL (`blob:...`). This bypasses the broken `app://` protocol.
 
-## Возможности
+## Features
 
-- Чтение изображений в обход `app://` протокола
-- Поддержка png, jpg, gif, webp, svg, bmp
-- Автоматическая обработка при открытии страницы
-- Команда **Reprocess images** для ручного обновления
+- Loads images bypassing the `app://` protocol
+- Supports png, jpg, gif, webp, svg, bmp
+- Automatic processing when opening a page
+- **Reprocess images** command for manual refresh
 
-## Установка
+## Installation
 
-### Символическая ссылка (рекомендуется для разработки)
+### Symlink (recommended for development)
 
 ```bash
-ln -s /путь/к/репозиторию /путь/к/хранилищу/.obsidian/plugins/image-renderer
+ln -s /path/to/repo /path/to/vault/.obsidian/plugins/image-renderer
 ```
 
-После `npm run build` Obsidian подхватит новый `main.js` после перезагрузки плагина.
+After `npm run build`, Obsidian picks up the new `main.js` on plugin reload.
 
-### Копирование файлов
+### Copy files
 
-Скопировать `main.js`, `manifest.json`, `styles.css` в директорию плагина:
+Copy `main.js`, `manifest.json`, `styles.css` to the plugin directory:
 
 ```text
 <Vault>/.obsidian/plugins/image-renderer/
 ```
 
-## Разработка
+## Development
 
 ```bash
 npm install
-npm run dev    # сборка с отслеживанием изменений
-npm run build  # production-сборка
+npm run dev    # watch mode
+npm run build  # production build
 npm run lint   # ESLint
 npm run test   # Vitest
 ```
 
-## Лицензия
+## License
 
 LGPL-3.0
