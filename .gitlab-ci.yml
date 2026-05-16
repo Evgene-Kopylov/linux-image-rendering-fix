@@ -53,10 +53,10 @@ plugin-build:
     stage: build
     image: node:${NODE_VERSION}
     <<: *rules
-    needs:
-        - unit-tests
-        - typescript-check
-        - eslint-check
+    # needs:
+    # - unit-tests
+    # - typescript-check
+    # - eslint-check
     script:
         - npm ci --prefer-offline
         - npm run build
