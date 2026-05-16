@@ -12,8 +12,20 @@ export default class ImageRendererPlugin extends Plugin {
             createImageProcessor(this.app.vault),
         );
 
-        // Принудительно обрабатываем текущую открытую страницу
-        this.processCurrentView();
+        // При старте дожидаемся готовности макета
+        this.app.workspace.onLayoutReady(() => {
+            this.processCurrentView();
+        });
+
+        // Обработка при смене активного файла
+        this.registerEvent(
+            this.app.workspace.on("active-leaf-change", (leaf) => {
+                const view = leaf?.view;
+                if (view instanceof MarkdownView) {
+                    createImageProcessor(this.app.vault)(view.contentEl);
+                }
+            }),
+        );
 
         // Команда для повторной обработки изображений
         this.addCommand({
