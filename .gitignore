@@ -1,5 +1,8 @@
+.tmp/
+.agents/
+
 # vscode
-.vscode 
+.vscode
 
 # Intellij
 *.iml

@@ -1,0 +1,21 @@
+pre-commit:
+    parallel: true
+    jobs:
+        - name: eslint
+          glob: "*.{ts,mts}"
+          run: npx eslint {staged_files}
+
+        - name: stylelint
+          glob: "*.css"
+          run: npx stylelint {staged_files}
+
+pre-push:
+    parallel: true
+    jobs:
+        - name: tsc
+          glob: "*.{ts,mts}"
+          run: npx tsc -noEmit -skipLibCheck
+
+        - name: vitest
+          glob: "*.{ts,mts}"
+          run: npx vitest --run

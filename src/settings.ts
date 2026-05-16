@@ -1,36 +1,53 @@
-import {App, PluginSettingTab, Setting} from "obsidian";
-import MyPlugin from "./main";
+import { App, PluginSettingTab, Setting } from "obsidian";
+import type ImageRendererPlugin from "./main";
+import type { ImageRendererSettings } from "./types";
 
-export interface MyPluginSettings {
-	mySetting: string;
-}
+/** Настройки плагина по умолчанию */
+export const DEFAULT_SETTINGS: ImageRendererSettings = {
+    debug: false,
+    maxImageSizeMB: 50,
+};
 
-export const DEFAULT_SETTINGS: MyPluginSettings = {
-	mySetting: 'default'
-}
+/** Вкладка настроек плагина */
+export class ImageRendererSettingTab extends PluginSettingTab {
+    plugin: ImageRendererPlugin;
 
-export class SampleSettingTab extends PluginSettingTab {
-	plugin: MyPlugin;
+    constructor(app: App, plugin: ImageRendererPlugin) {
+        super(app, plugin);
+        this.plugin = plugin;
+    }
 
-	constructor(app: App, plugin: MyPlugin) {
-		super(app, plugin);
-		this.plugin = plugin;
-	}
+    display(): void {
+        const { containerEl } = this;
 
-	display(): void {
-		const {containerEl} = this;
+        containerEl.empty();
 
-		containerEl.empty();
+        new Setting(containerEl)
+            .setName("Режим отладки")
+            .setDesc("Включить подробное логирование обработки изображений")
+            .addToggle((toggle) =>
+                toggle
+                    .setValue(this.plugin.settings.debug)
+                    .onChange(async (value) => {
+                        this.plugin.settings.debug = value;
+                        await this.plugin.saveSettings();
+                    }),
+            );
 
-		new Setting(containerEl)
-			.setName('Settings #1')
-			.setDesc('It\'s a secret')
-			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
-				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
-					await this.plugin.saveSettings();
-				}));
-	}
+        new Setting(containerEl)
+            .setName("Максимальный размер изображения (МБ)")
+            .setDesc("Изображения больше этого размера не будут обрабатываться")
+            .addText((text) =>
+                text
+                    .setPlaceholder("50")
+                    .setValue(String(this.plugin.settings.maxImageSizeMB))
+                    .onChange(async (value) => {
+                        const num = Number(value);
+                        if (!isNaN(num) && num > 0) {
+                            this.plugin.settings.maxImageSizeMB = num;
+                            await this.plugin.saveSettings();
+                        }
+                    }),
+            );
+    }
 }

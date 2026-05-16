@@ -1,11 +1,11 @@
 {
-	"id": "sample-plugin",
-	"name": "Sample Plugin",
-	"version": "1.0.0",
-	"minAppVersion": "0.15.0",
-	"description": "Demonstrates some of the capabilities of the Obsidian API.",
-	"author": "Obsidian",
-	"authorUrl": "https://obsidian.md",
-	"fundingUrl": "https://obsidian.md/pricing",
-	"isDesktopOnly": false
+    "id": "image-renderer",
+    "name": "Image Renderer",
+    "version": "0.0.1",
+    "minAppVersion": "1.12.7",
+    "description": "Fixes image rendering issues on Linux. Ensures images display correctly in Obsidian on Ubuntu and other Linux distributions.",
+    "author": "Evgene Kopylov",
+    "authorUrl": "",
+    "fundingUrl": "",
+    "isDesktopOnly": true
 }
