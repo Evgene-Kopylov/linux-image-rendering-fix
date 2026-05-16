@@ -1,6 +1,7 @@
 import { Notice, Plugin } from "obsidian";
 import { DEFAULT_SETTINGS, ImageRendererSettingTab } from "./settings";
 import type { ImageRendererSettings } from "./types";
+import { createImageProcessor } from "./utils/image-processor";
 
 /**
  * Плагин Image Renderer для Obsidian
@@ -12,6 +13,11 @@ export default class ImageRendererPlugin extends Plugin {
     async onload(): Promise<void> {
         await this.loadSettings();
         this.addSettingTab(new ImageRendererSettingTab(this.app, this));
+
+        // Регистрируем обработчик изображений
+        this.registerMarkdownPostProcessor(
+            createImageProcessor(this.app.vault),
+        );
 
         // Команда для проверки работоспособности плагина
         this.addCommand({
