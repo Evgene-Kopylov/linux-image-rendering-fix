@@ -1,11 +1,11 @@
 {
-    "id": "linux-image-rendering-fixer",
-    "name": "Linux Image Rendering Fixer",
-    "version": "1.0.4",
-    "minAppVersion": "1.12.7",
-    "description": "Fixes image rendering issues on Linux. Ensures images display correctly on Ubuntu and other Linux distributions.",
-    "author": "Evgene Kopylov",
-    "authorUrl": "",
-    "fundingUrl": "",
-    "isDesktopOnly": true
+	"id": "linux-image-rendering-fixer",
+	"name": "Linux Image Rendering Fixer",
+	"version": "1.0.5",
+	"minAppVersion": "1.12.7",
+	"description": "Fixes image rendering issues on Linux. Ensures images display correctly on Ubuntu and other Linux distributions.",
+	"author": "Evgene Kopylov",
+	"authorUrl": "",
+	"fundingUrl": "",
+	"isDesktopOnly": true
 }
