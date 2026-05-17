@@ -1,4 +1,4 @@
-# Linux Image Rendering Fixer
+# Linux Image Rendering Fix
 
 Obsidian plugin that fixes image rendering issues on Linux (Ubuntu).
 
@@ -39,7 +39,7 @@ and replaces `src` with a Blob URL (`blob:...`). This bypasses the broken `app:/
 ### Symlink (recommended for development)
 
 ```bash
-ln -s "$PWD" /home/death/obsidian-vault/.obsidian/plugins/linux-image-rendering-fixer
+ln -s "$PWD" /home/death/obsidian-vault/.obsidian/plugins/linux-image-rendering-fix
 ```
 
 After `npm run build`, Obsidian picks up the new `main.js` on plugin reload.
@@ -49,7 +49,7 @@ After `npm run build`, Obsidian picks up the new `main.js` on plugin reload.
 Copy `main.js`, `manifest.json`, `styles.css` to the plugin directory:
 
 ```text
-<Vault>/.obsidian/plugins/linux-image-rendering-fixer/
+<Vault>/.obsidian/plugins/linux-image-rendering-fix/
 ```
 
 ## Issues

@@ -5,7 +5,7 @@ import {
 } from "./utils/image-processor";
 
 /**
- * Плагин Linux Image Rendering Fixer для Obsidian
+ * Плагин Linux Image Rendering Fix для Obsidian
  * Исправляет проблемы отображения изображений на Linux
  */
 export default class ImageRendererPlugin extends Plugin {
