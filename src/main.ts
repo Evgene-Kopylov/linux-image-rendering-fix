@@ -52,8 +52,26 @@ export default class ImageRendererPlugin extends Plugin {
             }),
         );
 
+        // При изменении .md-файла форсим перерендер неактивных вкладок
+        this.registerEvent(
+            this.app.vault.on("modify", (file) => {
+                if (!(file instanceof TFile)) return;
+                if (file.extension !== "md") return;
+
+                this.app.workspace.iterateAllLeaves((leaf) => {
+                    const view = leaf.view;
+                    if (
+                        view instanceof MarkdownView &&
+                        view.file?.path === file.path
+                    ) {
+                        view.previewMode.rerender();
+                    }
+                });
+            }),
+        );
+
         // Перехватываем все img в DOM: неактивные вкладки, превью при наведении
-        let observerTimer: ReturnType<typeof setTimeout> | null = null;
+        let observerTimer: number | null = null;
         const processor = createImageProcessor(this.app.vault);
 
         this.observer = new MutationObserver((mutations) => {
