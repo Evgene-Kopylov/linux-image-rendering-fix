@@ -1,3 +1,8 @@
+> ## Disclaimer
+> Is this project **open source**? Yes
+> Is this project completely **free**? Yes
+> Is this project **vibe-coded** beyond the author's ability to comprehend how it works? No
+
 # Linux Image Rendering Fix — solves broken images on Linux
 
 **Repository:** [GitHub](https://github.com/Evgene-Kopylov/linux-image-rendering-fix)
