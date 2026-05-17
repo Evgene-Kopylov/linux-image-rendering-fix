@@ -15,9 +15,6 @@ const MIME_TYPES: Record<string, string> = {
 /** Расширения файлов изображений */
 export const IMAGE_EXTENSIONS = new Set(Object.keys(MIME_TYPES));
 
-/** Максимальный размер изображения для обработки (50 МБ) */
-const MAX_FILE_SIZE = 50 * 1024 * 1024;
-
 /**
  * Извлекает путь к файлу из src изображения Obsidian.
  * Поддерживает форматы:
@@ -83,10 +80,6 @@ async function processImage(
     try {
         const fileStat = await vault.adapter.stat(vaultPath);
         if (!fileStat) {
-            return;
-        }
-
-        if (fileStat.size > MAX_FILE_SIZE) {
             return;
         }
 
