@@ -1,14 +1,22 @@
 import { FileView, MarkdownView, Plugin, TFile } from "obsidian";
+
+declare const activeWindow: Window;
+declare const activeDocument: Document;
 import {
     createImageProcessor,
     IMAGE_EXTENSIONS,
 } from "./utils/image-processor";
+
+/** Задержка дебаунса для MutationObserver (мс) */
+const OBSERVER_DEBOUNCE_MS = 100;
 
 /**
  * Плагин Linux Image Rendering Fix для Obsidian
  * Исправляет проблемы отображения изображений на Linux
  */
 export default class ImageRendererPlugin extends Plugin {
+    private observer: MutationObserver | null = null;
+
     onload(): void {
         // Регистрируем обработчик изображений
         this.registerMarkdownPostProcessor(
@@ -43,6 +51,52 @@ export default class ImageRendererPlugin extends Plugin {
                 }
             }),
         );
+
+        // Перехватываем все img в DOM: неактивные вкладки, превью при наведении
+        let observerTimer: ReturnType<typeof setTimeout> | null = null;
+        const processor = createImageProcessor(this.app.vault);
+
+        this.observer = new MutationObserver((mutations) => {
+            // Пропускаем мутации от собственной обработки
+            if (!this.observer) return;
+
+            // Собираем уникальные элементы
+            const seen = new Set<HTMLElement>();
+            for (const m of mutations) {
+                m.addedNodes.forEach((node) => {
+                    if (node.instanceOf(HTMLElement)) {
+                        seen.add(node);
+                    }
+                });
+            }
+
+            if (seen.size === 0) return;
+
+            // Отключаем observer на время обработки, чтобы не ловить свои изменения
+            this.observer.disconnect();
+
+            // Дебаунс: ждём пока поток изменений утихнет
+            if (observerTimer) activeWindow.clearTimeout(observerTimer);
+            observerTimer = activeWindow.setTimeout(() => {
+                for (const el of seen) {
+                    processor(el);
+                }
+                // Переподключаем observer
+                this.observer?.observe(activeDocument.body, {
+                    childList: true,
+                    subtree: true,
+                });
+            }, OBSERVER_DEBOUNCE_MS);
+        });
+
+        this.observer.observe(activeDocument.body, {
+            childList: true,
+            subtree: true,
+        });
+
+        this.register(() => {
+            this.observer?.disconnect();
+        });
 
         // Команда для повторной обработки изображений
         this.addCommand({

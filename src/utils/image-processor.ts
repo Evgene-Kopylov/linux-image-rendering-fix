@@ -108,6 +108,11 @@ async function processImage(
  */
 export function createImageProcessor(vault: Vault): (el: HTMLElement) => void {
     return (el: HTMLElement) => {
+        // Сам элемент может быть img (превью при наведении)
+        if (el.instanceOf(HTMLImageElement)) {
+            void processImage(el, vault);
+        }
+
         const images = el.findAll("img");
         for (const img of images) {
             if (img.instanceOf(HTMLImageElement)) {
