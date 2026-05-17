@@ -39,7 +39,7 @@ and replaces `src` with a Blob URL (`blob:...`). This bypasses the broken `app:/
 ### Symlink (recommended for development)
 
 ```bash
-ln -s "$PWD" /home/death/obsidian-vault/.obsidian/plugins/linux-image-rendering-fix
+ln -s "$PWD" /home/death/Documents/TEST-VAULT-3/.obsidian/plugins/linux-image-rendering-fix
 ```
 
 After `npm run build`, Obsidian picks up the new `main.js` on plugin reload.
