@@ -54,11 +54,11 @@ Copy `main.js`, `manifest.json`, `styles.css` to the plugin directory:
 
 ## Issues
 
-Bug reports and feature requests: https://github.com/Evgene-Kopylov/linux-image-rendering-fixer-plugin/issues
+Bug reports and feature requests: https://github.com/Evgene-Kopylov/linux-image-rendering-fix/issues
 
 ## Development
 
-Development happens on GitLab: https://gitlab.com/Evgene-Kopylov/linux-image-rendering-fixer-plugin-for-obsidian
+Development happens on GitLab: https://gitlab.com/Evgene-Kopylov/linux-image-rendering-fix
 
 ```bash
 npm install
