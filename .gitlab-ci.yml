@@ -7,7 +7,7 @@ variables:
     NODE_VERSION: "24-alpine"
     NPM_CONFIG_CACHE: "${CI_PROJECT_DIR}/.npm"
     GITHUB_OWNER: "Evgene-Kopylov"
-    GITHUB_REPO: "linux-image-rendering-fixer-plugin"
+    GITHUB_REPO: "linux-image-rendering-fix"
 
 cache:
     key: "${CI_COMMIT_REF_SLUG}"
