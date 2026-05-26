@@ -11,7 +11,7 @@ The plugin intercepts Markdown rendering via `MarkdownPostProcessor`, finds ever
 
 - **Automatic** — images are replaced on page open, tab switch, and file modification
 - **Formats:** PNG, JPEG, GIF, WebP, SVG, BMP, ICO
-- **Reprocess Images** command — manual refresh for the current view
+
 - **Zero network requests** — works only inside the vault
 - **Zero configuration** — install and forget
 

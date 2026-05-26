@@ -32,7 +32,7 @@ and replaces `src` with a Blob URL (`blob:...`). This bypasses the broken `app:/
 - Loads images bypassing the `app://` protocol
 - Supports png, jpg, gif, webp, svg, bmp
 - Automatic processing when opening a page
-- **Reprocess images** command for manual refresh
+
 
 ## Installation
 

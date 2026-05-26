@@ -36,7 +36,7 @@ Other distributions (Pop!_OS, Linux Mint, Fedora, etc.) and package formats (Sna
 
 - **Automatic processing** — images are replaced on page open, tab switch, and file modification
 - **Broad format support:** PNG, JPEG, GIF, WebP, SVG, BMP, ICO
-- **Reprocess Images** command — manual refresh for the current view
+
 - **Safe by design:** works only with files inside the vault, makes zero network requests
 - **Zero configuration:** install and forget
 

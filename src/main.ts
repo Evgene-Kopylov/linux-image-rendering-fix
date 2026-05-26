@@ -115,15 +115,6 @@ export default class ImageRendererPlugin extends Plugin {
         this.register(() => {
             this.observer?.disconnect();
         });
-
-        // Команда для повторной обработки изображений
-        this.addCommand({
-            id: "reprocess-images",
-            name: "Reprocess images",
-            callback: () => {
-                this.processCurrentView();
-            },
-        });
     }
 
     /** Принудительно запускает обработчик на всех открытых вьюхах */
