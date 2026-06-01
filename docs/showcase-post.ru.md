@@ -1,8 +1,8 @@
-# Linux Image Rendering Fix — исправляет битые изображения на Linux
+# Linux Image Loading Fix — исправляет битые изображения на Linux
 
 **Репозиторий:** [GitHub](https://github.com/Evgene-Kopylov/linux-image-rendering-fix)
 
-**Установка:** Community Plugins → Browse → **Linux Image Rendering Fix**
+**Установка:** Community Plugins → Browse → **Linux Image Loading Fix**
 
 ---
 

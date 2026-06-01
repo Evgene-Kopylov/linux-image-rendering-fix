@@ -1,6 +1,6 @@
 Всем привет,
 
-Я разработал плагин для Obsidian, который решает именно эту проблему: **Linux Image Rendering Fix**.
+Я разработал плагин для Obsidian, который решает именно эту проблему: **Linux Image Loading Fix**.
 
 ## Корень проблемы
 
@@ -35,7 +35,7 @@
 
 ## Установка
 
-Settings → Community Plugins → Browse → поиск **Linux Image Rendering Fix** → Install → Enable
+Settings → Community Plugins → Browse → поиск **Linux Image Loading Fix** → Install → Enable
 
 **Репозитории:** [GitHub](https://github.com/Evgene-Kopylov/linux-image-rendering-fix) | [GitLab](https://gitlab.com/Evgene-Kopylov/linux-image-rendering-fix)
 

@@ -1,7 +1,7 @@
 Hi everyone,
 
 Hi everyone,
-I've been following this thread and the upstream Electron bug for a some time. Since it bosers me and none rushing to fix it, I built a plugin that works around it: "Linux Image Rendering Fix".
+I've been following this thread and the upstream Electron bug for a some time. Since it bosers me and none rushing to fix it, I built a plugin that works around it: "Linux Image Loading Fix".
 
 ## How it bypasses the bug
 
@@ -32,7 +32,7 @@ Some scenarios have a slight delay on first load — the system needs a "warm-up
 
 ## Install
 
-Community Plugins → Browse → search **Linux Image Rendering Fix** → Install → Enable
+Community Plugins → Browse → search **Linux Image Loading Fix** → Install → Enable
 
 **Repository:** [GitHub](https://github.com/Evgene-Kopylov/linux-image-rendering-fix)
 

@@ -1,6 +1,6 @@
 大家好，
 
-我开发了一个 Obsidian 插件专门解决这个问题：**Linux Image Rendering Fix**。
+我开发了一个 Obsidian 插件专门解决这个问题：**Linux Image Loading Fix**。
 
 ## 问题根源
 
@@ -35,7 +35,7 @@
 
 ## 安装
 
-Settings → Community Plugins → Browse → 搜索 **Linux Image Rendering Fix** → Install → Enable
+Settings → Community Plugins → Browse → 搜索 **Linux Image Loading Fix** → Install → Enable
 
 **仓库：** [GitHub](https://github.com/Evgene-Kopylov/linux-image-rendering-fix) | [GitLab](https://gitlab.com/Evgene-Kopylov/linux-image-rendering-fix)
 

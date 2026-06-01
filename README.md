@@ -1,4 +1,4 @@
-# Linux Image Rendering Fix
+# Linux Image Loading Fix
 
 Obsidian plugin that fixes image rendering issues on Linux (Ubuntu).
 
