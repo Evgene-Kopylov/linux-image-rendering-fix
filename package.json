@@ -1,7 +1,7 @@
 {
     "name": "obsidian-linux-image-fix",
     "version": "1.2.0",
-    "description": "Fixes image rendering issues on Linux. Ensures images display correctly in Obsidian on Ubuntu and other Linux distributions.",
+    "description": "Fixes image loading issues on Linux. Ensures images display correctly in Obsidian on Ubuntu and other Linux distributions.",
     "main": "main.js",
     "type": "module",
     "scripts": {
