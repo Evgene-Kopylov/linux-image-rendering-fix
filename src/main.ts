@@ -11,7 +11,7 @@ import {
 const OBSERVER_DEBOUNCE_MS = 100;
 
 /**
- * Плагин Linux Image Rendering Fix для Obsidian
+ * Плагин Linux Image Loading Fix для Obsidian
  * Исправляет проблемы отображения изображений на Linux
  */
 export default class ImageRendererPlugin extends Plugin {
